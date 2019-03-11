@@ -88,7 +88,7 @@ function SignIn(props) {
             </Button>
           </Link>
           <Link to='/dashboard'>
-            <Button A
+            <Button
               type="submit"
               fullWidth
               variant="contained"
