@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 const os = require('os');
 const app = express();
 
+const config = require('./config');
+
+mongoose.connect(config.URI, { useNewUrlParser: true });
 
 app.use(express.static('dist'));
 app.get('/api/getUsername', (req, res) => res.send({ username: os.userInfo().username }));
