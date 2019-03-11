@@ -11,6 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   main: {
@@ -52,8 +53,6 @@ function SignIn(props) {
   }
 
   function onSignInClick() {
-
-
   }
 
 
@@ -76,24 +75,29 @@ function SignIn(props) {
             <InputLabel htmlFor="password">Password</InputLabel>
             <Input name="password" type="password" id="password" autoComplete="current-password" />
           </FormControl>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign in
-          </Button>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Create Account
-          </Button>
+
+          <Link to='/dashboard'>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign in
+            </Button>
+          </Link>
+          <Link to='/dashboard'>
+            <Button A
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Create Account
+            </Button>
+          </Link>
         </form>
       </Paper>
     </main>

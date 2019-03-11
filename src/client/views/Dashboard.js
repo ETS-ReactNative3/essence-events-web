@@ -12,6 +12,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { mainListItems } from './listItems';
+import classNames from 'classnames';
 
 const drawerWidth = 240;
 
@@ -166,9 +167,5 @@ class Dashboard extends React.Component {
     );
   }
 }
-
-Dashboard.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(Dashboard);
