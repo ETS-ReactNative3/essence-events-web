@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const os = require('os');
 const app = express();
 
-const config = require('./config');
+const config = require('./db/config');
 
 mongoose.connect(config.URI, { useNewUrlParser: true });
 
