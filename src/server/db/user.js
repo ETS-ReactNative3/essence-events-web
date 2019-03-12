@@ -1,20 +1,20 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var userSchema = new Schema({
+var user = new Schema({
 
 	email: {
 		type: String,
 		unique: true,
 		required: true
-	}, 
+	},
 
 	hashed_password: {
 		type: String,
 		required: true
 	},
 
-	firstName: { 
+	firstName: {
 		type: String,
 		required: true
 	},
@@ -25,4 +25,4 @@ var userSchema = new Schema({
 	}
 });
 
-exports.User = mongoose.model('User', userSchema);
+exports.User = mongoose.model('User', user);
