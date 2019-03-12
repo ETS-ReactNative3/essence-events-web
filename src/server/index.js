@@ -1,9 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const os = require('os');
-const app = express();
-
 const config = require('./config');
+
+const app = express();
 
 mongoose.connect(config.URI, { useNewUrlParser: true });
 
