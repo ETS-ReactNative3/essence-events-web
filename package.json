@@ -21,6 +21,7 @@
     "bcrypt": "^3.0.4",
     "classnames": "latest",
     "express": "^4.16.3",
+    "jsonwebtoken": "^8.5.0",
     "mobx": "^5.9.0",
     "mobx-react": "^5.4.3",
     "mongoose": "^5.4.18",
