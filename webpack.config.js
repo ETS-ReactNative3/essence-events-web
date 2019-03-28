@@ -4,6 +4,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const outputDirectory = 'dist';
 
+console.log(path.join(__dirname, outputDirectory));
+
 module.exports = {
   entry: ['babel-polyfill', './src/client/index.js'],
   output: {
