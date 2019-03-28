@@ -11,7 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { mainListItems } from './listItems';
+import { mainListItems } from '../components/listItems';
 import classNames from 'classnames';
 
 const drawerWidth = 240;
