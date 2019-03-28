@@ -13,7 +13,14 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
-import { Redirect, Switch, Route, withRouter } from 'react-router-dom';
+import { Redirect, Switch, Route, withRouter, Link } from 'react-router-dom';
+import Home from './Landing/Home';
+import Services from './Landing/Services';
+import Testimonials from './Landing/Testimonials';
+import Vendors from './Landing/Vendors';
+import Contact from './Landing/Contact';
+import About from './Landing/About';
+import ImageGrid from './../components/ImageGrid';
 
 const styles = theme => ({
   layout: {
@@ -84,12 +91,21 @@ const sections = [
   'About',
 ];
 
+const sectionComponents = [
+  Home,
+  Services,
+  Testimonials,
+  Vendors,
+  Contact,
+  About
+];
+
 const sectionUrls = [
   '/',
   '/services',
   '/testimonials',
   '/vendors',
-  'contact',
+  '/contact',
   '/about',
 ];
 
@@ -108,20 +124,7 @@ const featuredPosts = [
   },
 ];
 
-const archives = [
-  'March 2020',
-  'February 2020',
-  'January 2020',
-  'December 2019',
-  'November 2019',
-  'October 2019',
-  'September 2019',
-  'August 2019',
-  'July 2019',
-  'June 2019',
-  'May 2019',
-  'April 2019',
-];
+
 
 const social = ['GitHub', 'Twitter', 'Facebook'];
 
@@ -151,7 +154,7 @@ class Landing extends React.Component {
               noWrap
               className={classes.toolbarTitle}
             >
-              Blog
+              Essence Events
             </Typography>
             <IconButton>
               <SearchIcon />
@@ -164,27 +167,28 @@ class Landing extends React.Component {
             </Button>
           </Toolbar>
           <Toolbar variant="dense" className={classes.toolbarSecondary}>
-            {sections.map(section => (
-              <Typography color="inherit" noWrap key={section}>
+            {sections.map((section, i) => (
+              <Button onClick={() => this.props.history.push(sectionUrls[i])} key={section}>
                 {section}
-              </Typography>
+              </Button>
             ))}
           </Toolbar>
           <main>
 
             <Switch>
-              <Route />
+              { sectionComponents.map((e, i) => <Route exact path={sectionUrls[i]} component={e} key={i}/>) }
             </Switch>
 
           </main>
         </div>
+
         {/* Footer */}
         <footer className={classes.footer}>
           <Typography variant="h6" align="center" gutterBottom>
-            Footer
+            Made with 💖 by SWE Team 1
           </Typography>
           <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-            Something here to give the footer a purpose!
+            © 2023 by Essence Events​
           </Typography>
         </footer>
         {/* End footer */}
