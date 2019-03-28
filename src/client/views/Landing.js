@@ -130,13 +130,14 @@ const social = ['GitHub', 'Twitter', 'Facebook'];
 
 class Landing extends React.Component {
 
-  state = { toLogin: false };
+  state = { toLogin: false, toCreate: false };
 
   render() {
 
     const { classes } = this.props;
 
     if (this.state.toLogin) return <Redirect to='/login'/>;
+    if (this.state.toCreate) return <Redirect to='/create'/>;
 
     if (!sectionUrls.includes(this.props.location.pathname)) return <Redirect to='/'/>;
 
@@ -145,26 +146,31 @@ class Landing extends React.Component {
         <CssBaseline />
         <div className={classes.layout}>
           <Toolbar className={classes.toolbarMain}>
-            <Button size="small">Subscribe</Button>
             <Typography
               component="h2"
               variant="h5"
               color="inherit"
-              align="center"
+              align="left"
               noWrap
               className={classes.toolbarTitle}
             >
               Essence Events
             </Typography>
-            <IconButton>
-              <SearchIcon />
-            </IconButton>
             <Button
-              onClick={() => this.setState({ toLogin: true })}
+              onClick={() => this.setState({ ...this.state, toCreate: true })}
+              variant="outlined"
+              size="small"
+            >
+              Create Account
+            </Button>
+            <span style={{width: 10}}/>
+            <Button
+              onClick={() => this.setState({ ...this.state, toLogin: true })}
               variant="outlined"
               size="small">
               Log in
             </Button>
+
           </Toolbar>
           <Toolbar variant="dense" className={classes.toolbarSecondary}>
             {sections.map((section, i) => (
