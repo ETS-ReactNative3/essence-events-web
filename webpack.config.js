@@ -7,7 +7,7 @@ const outputDirectory = 'dist';
 module.exports = {
   entry: ['babel-polyfill', './src/client/index.js'],
   output: {
-    path: path.resolve(__dirname, outputDirectory),
+    path: path.join(__dirname, outputDirectory),
     filename: 'bundle.js'
   },
   module: {
