@@ -126,8 +126,6 @@ class Landing extends React.Component {
 
     if (this.state.toLogin) return <Redirect to='/login'/>;
 
-    console.log(this.props.location.pathname);
-
     if (this.props.location.pathname !== '/') return <Redirect to='/'/>;
 
     return (
