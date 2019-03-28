@@ -173,13 +173,16 @@ class Landing extends React.Component {
               </Button>
             ))}
           </Toolbar>
-          <main>
 
-            <Switch>
-              { sectionComponents.map((e, i) => <Route exact path={sectionUrls[i]} component={e} key={i}/>) }
-            </Switch>
+          <div style={{paddingTop: 10}}>
+            <main>
 
-          </main>
+              <Switch>
+                { sectionComponents.map((e, i) => <Route exact path={sectionUrls[i]} component={e} key={i}/>) }
+              </Switch>
+
+            </main>
+          </div>
         </div>
 
         {/* Footer */}
