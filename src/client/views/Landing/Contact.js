@@ -16,7 +16,7 @@ class Contact extends React.Component {
           <Typography variant='h6'>
             Contact Information
           </Typography>
-          <Typography variant='p' style={{fontFamily: 'roboto'}}>
+          <Typography style={{fontFamily: 'roboto'}}>
             Erma Sams<br/>
             Phone: (352) 381-7067 <br/>
             Email: info@essenceevents.net
@@ -27,7 +27,7 @@ class Contact extends React.Component {
           <Typography variant='h6'>
             Address
           </Typography>
-          <Typography variant='p' style={{fontFamily: 'roboto'}}>
+          <Typography style={{fontFamily: 'roboto'}}>
             530 W University Ave<br/>
             Gainesville, Florida 32601
           </Typography>
@@ -37,7 +37,7 @@ class Contact extends React.Component {
           <Typography variant='h6'>
             Working Hours
           </Typography>
-          <Typography variant='p' style={{fontFamily: 'roboto'}}>
+          <Typography style={{fontFamily: 'roboto'}}>
             Monday - by appointment<br/>
             Saturday - by appointment<br/>
             Sunday - by appointment
