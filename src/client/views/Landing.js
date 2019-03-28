@@ -76,12 +76,21 @@ const styles = theme => ({
 });
 
 const sections = [
-  ['Home', '/home'],
+  'Home',
   'Services',
   'Testimonials',
   'Vendors',
   'Contact',
   'About',
+];
+
+const sectionUrls = [
+  '/',
+  '/services',
+  '/testimonials',
+  '/vendors',
+  'contact',
+  '/about',
 ];
 
 const featuredPosts = [
@@ -126,7 +135,7 @@ class Landing extends React.Component {
 
     if (this.state.toLogin) return <Redirect to='/login'/>;
 
-    if (this.props.location.pathname !== '/') return <Redirect to='/'/>;
+    if (!sectionUrls.includes(this.props.location.pathname)) return <Redirect to='/'/>;
 
     return (
       <React.Fragment>
