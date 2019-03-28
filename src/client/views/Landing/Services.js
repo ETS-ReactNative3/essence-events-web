@@ -183,7 +183,7 @@ class Services extends React.Component {
           </Grid>
         ))}
       </Grid>
-      <div>
+      <div style={{paddingTop: 30}}>
 
       </div>
       <ImageGrid tileData={tileData}/>
