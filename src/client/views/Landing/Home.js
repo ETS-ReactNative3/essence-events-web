@@ -21,6 +21,14 @@ import MoneyIcon from '@material-ui/icons/Money';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import ImageGrid from '../../components/ImageGrid';
 
+
+import home0 from './../../assets/home0.png';
+import home1 from './../../assets/home1.png';
+import home2 from './../../assets/home2.png';
+import home3 from './../../assets/home3.png';
+import home4 from './../../assets/home4.png';
+import home5 from './../../assets/home5.png';
+
 const styles = theme => ({
   '@global': {
     body: {
@@ -88,16 +96,16 @@ const tiers = [
 ];
 
 const tileData = [
-  {img: 'src/client/assets/home0.webp'},
-  {img: 'src/client/assets/home1.webp'},
-  {img: 'src/client/assets/home2.webp'},
-  {img: 'src/client/assets/home3.webp'},
-  {img: 'src/client/assets/home4.webp'},
-  {img: 'src/client/assets/home5.webp'},
+  {img: home0},
+  {img: home1},
+  {img: home2},
+  {img: home3},
+  {img: home4},
+  {img: home5},
 ];
 
 class Home extends React.Component {
-  
+
   render() {
 
     const { classes } = this.props;
