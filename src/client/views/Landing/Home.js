@@ -21,7 +21,7 @@ import MoneyIcon from '@material-ui/icons/Money';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import ImageGrid from '../../components/ImageGrid';
 
-
+import banner from './../../assets/banner.png'
 import home0 from './../../assets/home0.png';
 import home1 from './../../assets/home1.png';
 import home2 from './../../assets/home2.png';
@@ -113,7 +113,7 @@ class Home extends React.Component {
     return (
       <div>
 
-        <img src={"src/client/assets/banner.png"} width="100%" />
+        <img src={banner} width="100%" />
 
           <div style={{paddingTop: 20}}>
             <Grid container p={20} spacing={40} alignItems="flex-end">
