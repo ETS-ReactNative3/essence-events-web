@@ -40,7 +40,4 @@ function update(req, res, next) {
   return res.send(req.body);
 }
 
-router.post('/create', create);
-router.post('/login', login);
-
 module.exports = router;
