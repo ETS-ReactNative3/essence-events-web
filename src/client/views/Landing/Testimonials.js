@@ -7,6 +7,7 @@ import t2 from './../../assets/testimonials2.png';
 import t3 from './../../assets/testimonials3.png';
 import t4 from './../../assets/testimonials4.png';
 import t5 from './../../assets/testimonials5.png';
+import Grid from '@material-ui/core/Grid';
 
 const testimonials = [
   {
@@ -64,7 +65,14 @@ class Testimonials extends React.Component {
 
   render() {
     return <div align='center'>
-      {testimonials.map((data, i) => <div key={i} style={{paddingTop: 20}}><TestimonialCard data={data} /></div>)}
+
+      <Grid container spacing={40} alignItems="flex-start" >
+          {testimonials.map((data, i) =>
+            <Grid item key={i} xs={12} sm={12} md={8} lg={5}>
+              <TestimonialCard data={data} />
+            </Grid>
+          )}
+      </Grid>
     </div>
   }
 }

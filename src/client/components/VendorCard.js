@@ -74,6 +74,12 @@ class VendorCard extends React.Component {
             </a>
           </Typography>
           <div style={{height: 10}}/>
+
+          <Typography>
+            {this.props.data.phone}
+          </Typography>
+
+          <div style={{height: 10}}/>
           <Typography component="p">
             {this.props.data.description}
           </Typography>

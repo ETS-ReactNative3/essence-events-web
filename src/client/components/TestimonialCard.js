@@ -19,10 +19,10 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const styles = theme => ({
   card: {
-    maxWidth: 800,
+    maxWidth: 400,
   },
   media: {
-    height: 550,
+    height: 300,
     paddingTop: '56.25%', // 16:9
   },
   actions: {
