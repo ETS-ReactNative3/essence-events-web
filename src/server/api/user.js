@@ -5,16 +5,35 @@ const express = require('express');
 const router = express.Router();
 
 // log in a user
-function logIn(req, res, next) {
+function login(req, res, next) {
+  // TODO: add user log in functionality
+  // response = { authorized: bool, authToken: str }
+
+
+  return res.send(req.body);
+}
+
+// create a user
+function create(req, res, next) {
+  // TODO: add user create account functionality
+  // response = { created: bool, authToken: str }
+
+
   return res.send(req.body);
 }
 
 
-function createAccount(req, res, next) {
+// update a user
+function update(req, res, next) {
+  // TODO: add user update functionality
+  // response = { updated: bool }
+
+
   return res.send(req.body);
 }
 
-router.post('/create', createAccount);
-router.post('/login', logIn);
+router.post('/create', create);
+router.post('/login', login);
+router.post('/update', update);
 
 module.exports = router;
