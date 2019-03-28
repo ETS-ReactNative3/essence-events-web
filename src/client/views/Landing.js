@@ -13,7 +13,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
-import { Redirect, Switch, Route } from 'react-router-dom';
+import { Redirect, Switch, Route, withRouter } from 'react-router-dom';
 
 const styles = theme => ({
   layout: {
@@ -126,6 +126,10 @@ class Landing extends React.Component {
 
     if (this.state.toLogin) return <Redirect to='/login'/>;
 
+    console.log(this.props.location.pathname);
+
+    if (this.props.location.pathname !== '/') return <Redirect to='/'/>;
+
     return (
       <React.Fragment>
         <CssBaseline />
@@ -184,4 +188,4 @@ class Landing extends React.Component {
 
 }
 
-export default withStyles(styles)(Landing);
+export default withStyles(styles)(withRouter(Landing));
