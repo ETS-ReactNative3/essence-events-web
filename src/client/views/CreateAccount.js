@@ -9,10 +9,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import authStore from '../store/auth';
 import { observer } from 'mobx-react';
-import authStore from './../store/auth';
-
 
 const styles = theme => ({
   main: {
@@ -46,24 +45,15 @@ const styles = theme => ({
   },
 });
 
-
 class LogIn extends React.Component {
 
-  state = { toDashboard: false, email: '', password: '' };
-
-
-  componentWillMount() {
-    console.log(this.props);
-  }
+  state = { toDashboard: false, name: '', email: '', password: '' };
 
   onCreateAccountClick() {
-    // TODO: implement api call and following action
-  }
 
-  onSignInClick() {
-    // TODO: implement api call and following action
-    this.setState({ toDashboard: true });
-    console.log(this.props.authStore);
+    // TODO: implement axios call and get API key
+
+    this.setState({...this.state, toDashboard: true });
   }
 
 
@@ -71,7 +61,7 @@ class LogIn extends React.Component {
 
     const { classes } = this.props;
 
-    if (this.state.toDashboard) return <Redirect to='/dashboard'/>
+    if (this.state.toDashboard) return <Redirect to='/dashboard'/>;
 
     return (
       <main className={classes.main}>
@@ -84,24 +74,31 @@ class LogIn extends React.Component {
             Essence Events Portal
           </Typography>
           <form className={classes.form}>
+
             <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="email">Email Address</InputLabel>
-              <Input id="email" name="email" autoComplete="email" autoFocus onChange={(e) => this.setState({...this.state, email: e.target.value })}/>
-            </FormControl>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="password">Password</InputLabel>
-              <Input name="password" type="password" id="password" autoComplete="current-password" onChange={(e) => this.setState({...this.state, password: e.target.value })}/>
+              <InputLabel htmlFor="name">Name</InputLabel>
+              <Input name="name" type="text" id="name" autoFocus onChange={(e) => this.setState({...this.state, name: e.target.value })}/>
             </FormControl>
 
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="email">Email Address</InputLabel>
+              <Input id="email" name="email" autoComplete="email" onChange={(e) => this.setState({...this.state, email: e.target.value })}/>
+            </FormControl>
+
+
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="password">Password</InputLabel>
+              <Input name="password" type="password" id="password" onChange={(e) => this.setState({...this.state, password: e.target.value })}/>
+            </FormControl>
             <Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={this.onSignInClick.bind(this)}
+              onClick={this.onCreateAccountClick.bind(this)}
             >
-              Sign in
+              Create Account
             </Button>
           </form>
         </Paper>
