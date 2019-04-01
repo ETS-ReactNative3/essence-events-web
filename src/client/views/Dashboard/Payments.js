@@ -1,7 +1,7 @@
-import react from 'react';
+import React from 'react';
 
 
-class Payments extends react.Component {
+class Payments extends React.Component {
 
   render() {
     return (

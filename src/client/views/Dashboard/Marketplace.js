@@ -1,7 +1,7 @@
-import react from 'react';
+import React from 'react';
 
 
-class Marketplace extends react.Component {
+class Marketplace extends React.Component {
 
   render() {
     return (

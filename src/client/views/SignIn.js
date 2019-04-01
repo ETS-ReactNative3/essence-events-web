@@ -58,7 +58,7 @@ class LogIn extends React.Component {
   }
 
   onSignInClick() {
-    axios.post('/api/auth/login', {email: this.state.email, password: this.state.password})
+    axios.post('/api/user/login', {email: this.state.email, password: this.state.password})
       .then((response) => {
         console.log(response);
       });
