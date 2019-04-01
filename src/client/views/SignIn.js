@@ -9,7 +9,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import authStore from './../store/auth';
 import axios from 'axios';
@@ -61,9 +61,13 @@ class LogIn extends React.Component {
     axios.post('/api/user/login', {email: this.state.email, password: this.state.password})
       .then((response) => {
         console.log(response);
+        if (response.auth) {
+          console.log(this.props.authStore);
+        }
+        this.setState({ toDashboard: true });
       });
     // TODO: implement api call and following action
-    this.setState({ toDashboard: true });
+
   }
 
 
