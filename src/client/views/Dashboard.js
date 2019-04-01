@@ -198,12 +198,10 @@ class Dashboard extends React.Component {
           <Divider />
         </Drawer>
         <main className={classes.content}>
-          <Switch>
-            <Route exact path='/dashboard/todos' component={Todos}/>
-            <Route exact path='/dashboard/events' component={Events}/>
-            <Route exact path='/dashboard/marketplace' component={Marketplace}/>
-            <Route exact path='/dashboard/payments' component={Payments}/>
-          </Switch>
+          <Route exact path='/dashboard/todos' component={Todos}/>
+          <Route exact path='/dashboard/events' component={Events}/>
+          <Route exact path='/dashboard/marketplace' component={Marketplace}/>
+          <Route exact path='/dashboard/payments' component={Payments}/>
         </main>
       </div>
     );
