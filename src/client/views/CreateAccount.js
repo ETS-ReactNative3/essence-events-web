@@ -61,7 +61,7 @@ class LogIn extends React.Component {
 
     const { classes } = this.props;
 
-    if (this.state.toDashboard) return <Redirect to='/todos'/>;
+    if (this.state.toDashboard) return <Redirect to='/dashboard/todos'/>;
 
     return (
       <main className={classes.main}>

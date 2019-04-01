@@ -12,7 +12,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import classNames from 'classnames';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import Events from './Dashboard/Events';
 import Marketplace from './Dashboard/Marketplace';
 import Payments from './Dashboard/Payments';
@@ -169,25 +169,25 @@ class Dashboard extends React.Component {
           <Divider />
           <List>
             <div>
-              <ListItem button onClick={() => {}}>
+              <ListItem button onClick={() => {this.props.history.push('/dashboard/todos')}}>
                 <ListItemIcon>
                   <CheckIcon />
                 </ListItemIcon>
                 <ListItemText primary="To-dos" />
               </ListItem>
-              <ListItem button>
+              <ListItem button onClick={() => {this.props.history.push('/dashboard/events')}}>
                 <ListItemIcon>
                   <EventIcon />
                 </ListItemIcon>
                 <ListItemText primary="Events" />
               </ListItem>
-              <ListItem button>
+              <ListItem button onClick={() => {this.props.history.push('/dashboard/marketplace')}}>
                 <ListItemIcon>
                   <ShoppingCartIcon />
                 </ListItemIcon>
                 <ListItemText primary="Marketplace" />
               </ListItem>
-              <ListItem button>
+              <ListItem button onClick={() => {this.props.history.push('/dashboard/payments')}}>
                 <ListItemIcon>
                   <AttachMoneyIcon />
                 </ListItemIcon>
@@ -199,10 +199,10 @@ class Dashboard extends React.Component {
         </Drawer>
         <main className={classes.content}>
           <Switch>
-            <Route path='\todos' component={Todos}/>
-            <Route path='\events' component={Events}/>
-            <Route path='\marketplace' component={Marketplace}/>
-            <Route path='\payments' component={Payments}/>
+            <Route exact path='/dashboard/todos' component={Todos}/>
+            <Route exact path='/dashboard/events' component={Events}/>
+            <Route exact path='/dashboard/marketplace' component={Marketplace}/>
+            <Route exact path='/dashboard/payments' component={Payments}/>
           </Switch>
         </main>
       </div>
@@ -210,4 +210,4 @@ class Dashboard extends React.Component {
   }
 }
 
-export default withStyles(styles)(Dashboard);
+export default withStyles(styles)(withRouter(Dashboard));
