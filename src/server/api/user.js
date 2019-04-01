@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const userModel = require('../db/user');
 const bcrypt = require('bcrypt');
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const config = require('./config');
+let userModel = require('../db/user');
 
 // log in a user
 function login(req, res, next) {
@@ -14,6 +14,7 @@ function login(req, res, next) {
   userModel.findOne({ email: req.body.email }, function (err, user) {
     if (err) return res.status(500).send('Error on the server.');
     if (!user) return res.status(404).send('No user found.');
+    console.log([req.body.password, user.password]);
     var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
     if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
     var token = jwt.sign({ id: user._id }, config.secret, {

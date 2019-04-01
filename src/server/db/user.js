@@ -17,4 +17,11 @@ const userSchema = new Schema({
 	}
 });
 
-module.exports = mongoose.model('User', userSchema);
+let model;
+try {
+	model = mongoose.model('User');
+} catch (e) {
+	model = mongoose.model('User', userSchema);
+}
+
+module.exports = model;
