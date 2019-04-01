@@ -54,16 +54,21 @@ class LogIn extends React.Component {
 
 
   componentWillMount() {
-    console.log(this.props);
+    axios.post('/api/user/login', {email: this.state.email, password: this.state.password})
+      .then((response) => {
+        console.log(response);
+        console.log(this.props.authStore);
+        console.log(response.auth);
+        this.setState({ toDashboard: true });
+      });
   }
 
   onSignInClick() {
     axios.post('/api/user/login', {email: this.state.email, password: this.state.password})
       .then((response) => {
         console.log(response);
-        if (response.auth) {
-          console.log(this.props.authStore);
-        }
+        console.log(this.props.authStore);
+        console.log(response.auth);
         this.setState({ toDashboard: true });
       });
     // TODO: implement api call and following action
@@ -98,7 +103,6 @@ class LogIn extends React.Component {
             </FormControl>
 
             <Button
-              type="submit"
               fullWidth
               variant="contained"
               color="primary"
