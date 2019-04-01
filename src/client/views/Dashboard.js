@@ -11,8 +11,20 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { mainListItems } from '../components/listItems';
 import classNames from 'classnames';
+import { Switch, Route } from 'react-router-dom';
+import Events from './Dashboard/Events';
+import Marketplace from './Dashboard/Marketplace';
+import Payments from './Dashboard/Payments';
+import Todos from './Dashboard/Todos';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import EventIcon from '@material-ui/icons/Event';
+import CheckIcon from '@material-ui/icons/Check';
+
 
 const drawerWidth = 240;
 
@@ -155,13 +167,44 @@ class Dashboard extends React.Component {
             </IconButton>
           </div>
           <Divider />
-          <List>{mainListItems}</List>
+          <List>
+            <div>
+              <ListItem button onClick={() => {}}>
+                <ListItemIcon>
+                  <CheckIcon />
+                </ListItemIcon>
+                <ListItemText primary="To-dos" />
+              </ListItem>
+              <ListItem button>
+                <ListItemIcon>
+                  <EventIcon />
+                </ListItemIcon>
+                <ListItemText primary="Events" />
+              </ListItem>
+              <ListItem button>
+                <ListItemIcon>
+                  <ShoppingCartIcon />
+                </ListItemIcon>
+                <ListItemText primary="Marketplace" />
+              </ListItem>
+              <ListItem button>
+                <ListItemIcon>
+                  <AttachMoneyIcon />
+                </ListItemIcon>
+                <ListItemText primary="Payments" />
+              </ListItem>
+            </div>
+          </List>
           <Divider />
         </Drawer>
         <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <div className={classes.tableContainer}>
-          </div>
+          <Switch>
+            <Route path='\todos' component={Todos}/>
+            <Route path='\events' component={Events}/>
+            <Route path='\marketplace' component={Marketplace}/>
+            <Route path='\payments' component={Payments}/>
+
+          </Switch>
         </main>
       </div>
     );
