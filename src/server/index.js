@@ -3,8 +3,11 @@ const mongoose = require('mongoose');
 const os = require('os');
 const config = require('./config');
 const path = require('path');
+const bodyParser = require('body-parser')
 
 const app = express();
+
+app.use(bodyParser.json());
 
 const calendarRouter = require('./api/calendar');
 const cartRouter = require('./api/cart');
