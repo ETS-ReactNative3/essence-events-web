@@ -8,36 +8,41 @@ const router = express.Router();
 function create(req, res, next) {
   // TODO: add complete todo functionality by todoId
   // response = { created: bool, todoId: str }
+  todoModel.create({
+    email: req.body.email,
+    name: req.body.name,
+    completed: false
+  },
+  function(err, todo) {
+    if (err) return res.status(500).send("There was an error when creating the list.");
+    res.status(200).send({ created: true })
+  });
 
-
-  return res.send(req.body);
 }
 
 // fetch a users todos
 function fetch(req, res, next) {
   // TODO: add fetch todo for a particular user by email
   // response = { todos: [{ todoId: str, email: str, name: str, completed: bool }, ... ] }
-
-
-  return res.send(req.body);
+  todoModel.findOne({ email: req.body.email }, function(err, todo) {
+    if (err) return res.status(500).send('Server Error.');
+    if (!todo) return res.status(404).send('No item found.');
+    res.status(200).send(todo.name)
+  });
 }
 
-// complete a todo
-function complete(req, res, next) {
-  // TODO: add functionality to complete a todo by todoId
-  // response = { completed: bool, todoId: str }
-
-
-  return res.send(req.body);
-}
 
 // create a user
 function update(req, res, next) {
   // TODO: add functionality to update a todo by todoId
   // response = { updated: bool, todoId: str }
+  todoModel.findOne({ _id: req.body.id }, function(err, todo) {
+    if (err) return res.status(500).send('Server Error.');
+    if (!todo) return res.status(404).send('No item found.');
+    todo.completed = req.body.completed;
+    res.status(200).send({ updated: true });
+  });
 
-
-  return res.send(req.body);
 }
 
 module.exports = router;
