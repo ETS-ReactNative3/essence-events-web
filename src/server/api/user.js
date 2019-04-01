@@ -3,6 +3,8 @@ const userModel = require('../db/user');
 const bcrypt = require('bcrypt');
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
+const config = require('./config');
 
 // log in a user
 function login(req, res, next) {
