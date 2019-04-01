@@ -203,7 +203,6 @@ class Dashboard extends React.Component {
             <Route path='\events' component={Events}/>
             <Route path='\marketplace' component={Marketplace}/>
             <Route path='\payments' component={Payments}/>
-
           </Switch>
         </main>
       </div>
