@@ -49,7 +49,7 @@ function SignIn(props) {
   const { classes } = props;
 
   function onCreateAccountClick() {
-    axios.post('api/createuser', )
+    axios.post('api/register', )
   }
 
   function onSignInClick() {
