@@ -58,7 +58,7 @@ class LogIn extends React.Component {
   }
 
   onSignInClick() {
-    axios.post('/api/auth/login', {email: this.state.email, password: this.state.password})
+    axios.post('/api/user/login', {email: this.state.email, password: this.state.password})
       .then((response) => {
         console.log(response);
       });
@@ -71,7 +71,7 @@ class LogIn extends React.Component {
 
     const { classes } = this.props;
 
-    if (this.state.toDashboard) return <Redirect to='/todos'/>
+    if (this.state.toDashboard) return <Redirect to='/dashboard/todos'/>
 
     return (
       <main className={classes.main}>
