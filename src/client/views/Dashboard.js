@@ -12,7 +12,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import classNames from 'classnames';
-import { Switch, Route, withRouter } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 import Events from './Dashboard/Events';
 import Marketplace from './Dashboard/Marketplace';
 import Payments from './Dashboard/Payments';
