@@ -5,6 +5,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const config = require('./config');
 const userModel = require('../db/user');
+const Verifier = require('email-verifier');
 
 // log in a user
 function login(req, res, next) {
@@ -13,7 +14,7 @@ function login(req, res, next) {
   console.log(req.body);
   userModel.findOne({ email: req.body.email }, function (err, user) {
     if (err) return res.status(500).send('Error on the server.');
-    if (!user) return res.status(404).send('No user found.');
+    if (!user) return res.status(403).send('No user found.');
 
     var passwordIsValid = bcrypt.compareSync(req.body.password, user._doc.password);
     if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
@@ -41,6 +42,11 @@ function create(req, res, next) {
     var token = jwt.sign({ id: user._id }, config.secret, {
       expiresIn: 86400 // expires in 24 hours
     });
+    let verifier = new Verifier("at_Ok16LTfMj21RBzPcN25OVJOOEeGSN");
+	verifier.verify(user.email, (err, data) => {
+	    if (err) throw err;
+	    console.log(data);
+	});
     res.status(200).send({ auth: true, token: token });
   }); 
 }

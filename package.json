@@ -21,6 +21,7 @@
     "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
     "classnames": "latest",
+    "email-verifier": "^0.4.1",
     "express": "^4.16.3",
     "google-map-react": "^1.1.2",
     "jsonwebtoken": "^8.5.1",

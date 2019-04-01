@@ -14,6 +14,10 @@ const userSchema = new Schema({
 	},
 	name : {
 		type: String,
+	},
+	verified: {
+		type: Boolean,
+		default: false
 	}
 });
 
