@@ -54,13 +54,7 @@ class LogIn extends React.Component {
 
 
   componentWillMount() {
-    axios.post('/api/user/login', {email: this.state.email, password: this.state.password})
-      .then((response) => {
-        console.log(response);
-        console.log(this.props.authStore);
-        console.log(response.auth);
-        this.setState({ toDashboard: true });
-      });
+
   }
 
   onSignInClick() {
@@ -70,9 +64,9 @@ class LogIn extends React.Component {
         console.log(this.props.authStore);
         console.log(response.auth);
         this.setState({ toDashboard: true });
-      });
-    // TODO: implement api call and following action
-
+      }).catch((err) => {
+      // TODO: alert user of wrong / pass or email
+    });
   }
 
 

@@ -12,6 +12,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { Redirect } from 'react-router-dom';
 import authStore from '../store/auth';
 import { observer } from 'mobx-react';
+import axios from 'axios';
 
 const styles = theme => ({
   main: {
@@ -52,8 +53,15 @@ class LogIn extends React.Component {
   onCreateAccountClick() {
 
     // TODO: implement axios call and get API key
-
-    this.setState({...this.state, toDashboard: true });
+    axios.post('/api/user/create', {name: this.state.name, email: this.state.email, password: this.state.password})
+      .then((response) => {
+        console.log(response);
+        console.log(this.props.authStore);
+        console.log(response.auth);
+        // this.setState({ toDashboard: true });
+      }).catch((err) => {
+      // TODO: alert user of wrong / pass or email
+    });
   }
 
 

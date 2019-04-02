@@ -5,7 +5,6 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const config = require('./config');
 const userModel = require('../db/user');
-const Verifier = require('email-verifier');
 
 // log in a user
 function login(req, res, next) {
@@ -42,11 +41,6 @@ function create(req, res, next) {
     var token = jwt.sign({ id: user._id }, config.secret, {
       expiresIn: 86400 // expires in 24 hours
     });
-    let verifier = new Verifier("at_Ok16LTfMj21RBzPcN25OVJOOEeGSN");
-	verifier.verify(user.email, (err, data) => {
-	    if (err) throw err;
-	    console.log(data);
-	});
     res.status(200).send({ auth: true, token: token });
   }); 
 }
