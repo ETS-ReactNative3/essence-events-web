@@ -12,7 +12,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import classNames from 'classnames';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, withRouter, Redirect } from 'react-router-dom';
 import Events from './Dashboard/Events';
 import Marketplace from './Dashboard/Marketplace';
 import Payments from './Dashboard/Payments';
@@ -24,6 +24,9 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import EventIcon from '@material-ui/icons/Event';
 import CheckIcon from '@material-ui/icons/Check';
+import { observer } from 'mobx-react';
+import authStore from './../store/auth';
+import AccountPop from './../components/AccountPop';
 
 
 const drawerWidth = 240;
@@ -122,6 +125,7 @@ class Dashboard extends React.Component {
     const { classes } = this.props;
 
     // TODO: redirect to /login if no auth token
+    if (!this.props.authStore.token) return (<Redirect to='/login'/>);
 
     return (
       <div className={classes.root}>
@@ -151,9 +155,15 @@ class Dashboard extends React.Component {
             >
               Essence Events Portal
             </Typography>
-            <IconButton color="inherit">
-              <AccountCircleIcon />
-            </IconButton>
+
+
+            {/*<IconButton color="inherit">*/}
+            {/*  <AccountCircleIcon />*/}
+            {/*</IconButton>*/}
+
+            <AccountPop color="inherit"/>
+
+
           </Toolbar>
         </AppBar>
         <Drawer
@@ -211,4 +221,8 @@ class Dashboard extends React.Component {
   }
 }
 
-export default withStyles(styles)(withRouter(Dashboard));
+function injectStore (Component) {
+  return (() => <Component authStore={authStore} />)
+}
+
+export default injectStore(withStyles(styles)(withRouter(Dashboard)));

@@ -1,8 +1,8 @@
 import { observable } from 'mobx';
 
 // TODO: configure store
-let authStore = observable({
-  authToken: ''
-});
+class AuthStore {
+  @observable token = '';
+}
 
-export default authStore;
+export default AuthStore;

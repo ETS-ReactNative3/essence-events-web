@@ -54,13 +54,15 @@ class LogIn extends React.Component {
 
     // TODO: implement axios call and get API key
     axios.post('/api/user/create', {name: this.state.name, email: this.state.email, password: this.state.password})
-      .then((response) => {
-        console.log(response);
-        console.log(this.props.authStore);
-        console.log(response.auth);
-        // this.setState({ toDashboard: true });
+      .then((res) => {
+
+        this.props.authStore.token = res.data.token;
+
+        // redirect to the dashboard
+        this.setState({ toDashboard: true });
       }).catch((err) => {
-      // TODO: alert user of wrong / pass or email
+      if (err.response.request.status === 401) this.setState({ ...this.state, wrongPassword: true, wrongEmail: false });
+      if (err.response.request.status === 403) this.setState({ ...this.state, wrongEmail: true, wrongPassword: false });
     });
   }
 
@@ -99,7 +101,6 @@ class LogIn extends React.Component {
               <Input name="password" type="password" id="password" onChange={(e) => this.setState({...this.state, password: e.target.value })}/>
             </FormControl>
             <Button
-              type="submit"
               fullWidth
               variant="contained"
               color="primary"

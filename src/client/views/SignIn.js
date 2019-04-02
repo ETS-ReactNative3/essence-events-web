@@ -47,20 +47,22 @@ const styles = theme => ({
   },
 });
 
-
+@observer
 class LogIn extends React.Component {
 
   state = { toDashboard: false, email: '', password: '', wrongPassword: false, wrongEmail: false };
 
   onSignInClick() {
     axios.post('/api/user/login', {email: this.state.email, password: this.state.password})
-      .then(() => {
-        // TODO: add token to store
+      .then((res) => {
+
+        this.props.authStore.token = res.data.token;
+
         // redirect to the dashboard
           this.setState({ toDashboard: true });
       }).catch((err) => {
-        if (err.response.request.status === 401) this.setState({ ...this.state, wrongPassword: true });
-        if (err.response.request.status === 403) this.setState({ ...this.state, wrongEmail: true });
+        if (err.response.request.status === 401) this.setState({ ...this.state, wrongPassword: true, wrongEmail: false });
+        if (err.response.request.status === 403) this.setState({ ...this.state, wrongEmail: true, wrongPassword: false });
     });
   }
 
@@ -70,6 +72,8 @@ class LogIn extends React.Component {
     const { classes } = this.props;
 
     if (this.state.toDashboard) return <Redirect to='/dashboard/todos'/>
+
+    if (this.props.authStore.token) return <Redirect to='/dashboard/todos'/>
 
     return (
       <main className={classes.main}>
