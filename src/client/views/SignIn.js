@@ -50,22 +50,17 @@ const styles = theme => ({
 
 class LogIn extends React.Component {
 
-  state = { toDashboard: false, email: '', password: '' };
-
-
-  componentWillMount() {
-
-  }
+  state = { toDashboard: false, email: '', password: '', wrongPassword: false, wrongEmail: false };
 
   onSignInClick() {
     axios.post('/api/user/login', {email: this.state.email, password: this.state.password})
-      .then((response) => {
-        console.log(response);
-        console.log(this.props.authStore);
-        console.log(response.auth);
-        this.setState({ toDashboard: true });
+      .then(() => {
+        // TODO: add token to store
+        // redirect to the dashboard
+          this.setState({ toDashboard: true });
       }).catch((err) => {
-      // TODO: alert user of wrong / pass or email
+        if (err.response.request.status === 401) this.setState({ ...this.state, wrongPassword: true });
+        if (err.response.request.status === 403) this.setState({ ...this.state, wrongEmail: true });
     });
   }
 
@@ -87,13 +82,13 @@ class LogIn extends React.Component {
             Essence Events Portal
           </Typography>
           <form className={classes.form}>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="email">Email Address</InputLabel>
+            <FormControl error={this.state.wrongEmail} margin="normal" required fullWidth>
+              <InputLabel htmlFor="email">Email</InputLabel>
               <Input id="email" name="email" autoComplete="email" autoFocus onChange={(e) => this.setState({...this.state, email: e.target.value })}/>
             </FormControl>
-            <FormControl margin="normal" required fullWidth>
+            <FormControl error={this.state.wrongPassword} margin="normal" required fullWidth>
               <InputLabel htmlFor="password">Password</InputLabel>
-              <Input name="password" type="password" id="password" autoComplete="current-password" onChange={(e) => this.setState({...this.state, password: e.target.value })}/>
+              <Input  name="password" type="password" id="password" autoComplete="current-password" onChange={(e) => this.setState({...this.state, password: e.target.value })}/>
             </FormControl>
 
             <Button

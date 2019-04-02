@@ -121,6 +121,8 @@ class Dashboard extends React.Component {
   render() {
     const { classes } = this.props;
 
+    // TODO: redirect to /login if no auth token
+
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -198,6 +200,7 @@ class Dashboard extends React.Component {
           <Divider />
         </Drawer>
         <main className={classes.content}>
+          <div style={{paddingTop: 60}} />
           <Route exact path='/dashboard/todos' component={Todos}/>
           <Route exact path='/dashboard/events' component={Events}/>
           <Route exact path='/dashboard/marketplace' component={Marketplace}/>

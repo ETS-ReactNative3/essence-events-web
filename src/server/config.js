@@ -3,7 +3,7 @@ const config = {
   "user": "isaiahnields",
   "password": "Logmein123",
   "db": "essence-events-portal",
-  URI: "mongodb://isaiahnields:Logmein123@ds211096.mlab.com:11096/essence-events-portal",
+  URI: "mongodb://isaiahnields:Logmein123@ds229826.mlab.com:29826/essence-events-web",
   "roles": [
     {
       "role": "dbOwner",

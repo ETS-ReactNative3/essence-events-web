@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
+delete mongoose.models.user;
+delete mongoose.modelSchemas.user;
 
+const userSchema = new Schema({
 	email: {
 		type: String,
 		unique: true,
@@ -10,22 +12,15 @@ const userSchema = new Schema({
 	},
 	password: {
 		type: String,
-		required: true
+		required: true,
+		default: 'neverborn'
 	},
 	name : {
 		type: String,
-	},
-	verified: {
-		type: Boolean,
-		default: false
+		required: true
 	}
 });
 
-let model;
-try {
-	model = mongoose.model('User');
-} catch (e) {
-	model = mongoose.model('User', userSchema);
-}
+const users = mongoose.model('User', userSchema);
 
-module.exports = model;
+module.exports = users;
