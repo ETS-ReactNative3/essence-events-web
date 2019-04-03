@@ -27,6 +27,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import { observer } from 'mobx-react';
 import authStore from './../store/auth';
 import AccountPop from './../components/AccountPop';
+import SettingsPop from '../components/SettingsPop';
 
 
 const drawerWidth = 240;
@@ -111,20 +112,28 @@ const styles = theme => ({
 class Dashboard extends React.Component {
   state = {
     open: true,
+    settingsOpen: false
   };
 
   handleDrawerOpen = () => {
-    this.setState({ open: true });
+    this.setState({ ...this.state, open: true });
   };
 
   handleDrawerClose = () => {
-    this.setState({ open: false });
+    this.setState({ ...this.state, open: false });
+  };
+
+  openSettings() {
+    this.setState({ ...this.state, settingsOpen: true });
+  };
+
+  closeSettings = () => {
+    this.setState({ ...this.state, settingsOpen: false });
   };
 
   render() {
     const { classes } = this.props;
 
-    // TODO: redirect to /login if no auth token
     if (!this.props.authStore.token) return (<Redirect to='/login'/>);
 
     return (
@@ -156,12 +165,7 @@ class Dashboard extends React.Component {
               Essence Events Portal
             </Typography>
 
-
-            {/*<IconButton color="inherit">*/}
-            {/*  <AccountCircleIcon />*/}
-            {/*</IconButton>*/}
-
-            <AccountPop color="inherit"/>
+            <AccountPop color="inherit" openSettings={this.openSettings.bind(this)}/>
 
 
           </Toolbar>
@@ -216,6 +220,8 @@ class Dashboard extends React.Component {
           <Route exact path='/dashboard/marketplace' component={Marketplace}/>
           <Route exact path='/dashboard/payments' component={Payments}/>
         </main>
+
+        {this.state.settingsOpen ?  <SettingsPop close={this.closeSettings.bind(this)}/> : null }
       </div>
     );
   }

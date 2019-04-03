@@ -67,16 +67,69 @@ function create(req, res, next) {
 }
 
 
-// update a user
-function update(req, res, next) {
-  // TODO: add user update functionality
-  // response = { updated: bool }
+function changePassword(req, res, next) {
 
-  return res.send('');
+  console.log('USER - CHANGE PASSWORD');
+
+  jwt.verify(req.body.token, config.secret, (err, decoded) => {
+
+    // if err, send 403
+    if (err) return res.status(403).send({created: false});
+
+    userModel.updateOne({ email: decoded.id }, { $set: {password: bcrypt.hashSync(req.body.password, 10) } },
+      function (err, update) {
+
+      if (err) return res.status(500).send({ created: false, message: err });
+
+      res.status(200).send({ changed: true });
+
+    });
+
+
+  });
 }
+
+function changeName(req, res, next) {
+
+  console.log("USER - CHANGE NAME");
+
+  jwt.verify(req.body.token, config.secret, (err, decoded) => {
+
+    // if err, send 403
+    if (err) return res.status(403).send({created: false});
+
+    userModel.updateOne({ email: decoded.id }, {$set: { name: req.body.name } },
+      function (err, name) {
+        if (err) return  res.status(500).send({ created: false, message: err });
+
+        res.status(200).send({ changed: true });
+      })
+  });
+}
+
+function fetch(req, res, next) {
+
+  console.log("USER - FETCH");
+
+  jwt.verify(req.body.token, config.secret, (err, decoded) => {
+
+    // if err, send 403
+    if (err) return res.status(403).send({created: false});
+
+    userModel.findOne({ email: decoded.id },
+      function (err, name) {
+        if (err) return res.status(500).send({ created: false, message: err });
+        res.status(200).send({ found: true, name: name.name });
+      })
+  });
+
+}
+
 
 router.post('/create', create);
 router.post('/login', login);
-router.post('/update', update);
+router.post('/password', changePassword);
+router.post('/name', changeName);
+router.post('/fetch', fetch);
 
 module.exports = router;

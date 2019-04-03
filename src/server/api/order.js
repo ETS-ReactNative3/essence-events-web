@@ -55,16 +55,6 @@ function fetch(req, res, next) {
 
 }
 
-
-function complete(req, res, next) {
-
-}
-
-
-function update(req, res, next) {
-
-}
-
 router.post('/create', create);
 router.post('/fetch', fetch);
 

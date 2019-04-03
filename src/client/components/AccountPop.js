@@ -10,53 +10,60 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { observer } from 'mobx-react';
 import authStore from './../store/auth';
 import { Redirect } from 'react-router-dom';
+import SettingsPop from './SettingsPop';
 
 const WithState = toRenderProps(withState('anchorEl', 'updateAnchorEl', null));
 
 class AccountPop extends React.Component {
 
-  state = { toLanding: false };
+  state = { toLanding: false, settingsOpen: false };
 
   handleLogOut() {
     this.props.authStore.token = '';
     this.setState({toLanding: true});
-
   };
+
+  componentDidMount() {
+    console.log(this.props);
+  }
 
   render() {
 
     if (this.state.toLanding) return <Redirect to='/'/>;
 
     return (
-      <WithState>
-        {({ anchorEl, updateAnchorEl }) => {
-          const open = Boolean(anchorEl);
-          const handleClose = () => {
-            updateAnchorEl(null);
-          };
+      <div>
+        <WithState>
+          {({ anchorEl, updateAnchorEl }) => {
+            const open = Boolean(anchorEl);
+            const handleClose = () => {
+              updateAnchorEl(null);
+            };
 
-          return (
-            <React.Fragment>
+            return (
+              <React.Fragment>
 
-              <IconButton
-                color="inherit"
-                aria-owns={open ? 'render-props-menu' : undefined}
-                aria-haspopup="true"
-                onClick={event => {
-                  updateAnchorEl(event.currentTarget);
-                }}
-              >
-                <AccountCircleIcon />
-              </IconButton>
+                <IconButton
+                  color="inherit"
+                  aria-owns={open ? 'render-props-menu' : undefined}
+                  aria-haspopup="true"
+                  onClick={event => {
+                    updateAnchorEl(event.currentTarget);
+                  }}
+                >
+                  <AccountCircleIcon />
+                </IconButton>
 
-              <Menu id="render-props-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
-                <MenuItem onClick={() => {console.log('test')}}>Settings</MenuItem>
-                <MenuItem onClick={() => {this.handleLogOut()}}>Logout</MenuItem>
-              </Menu>
-            </React.Fragment>
-          );
-        }}
-      </WithState>
+                <Menu id="render-props-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+                  <MenuItem onClick={() => {this.props.openSettings()}}>Settings</MenuItem>
+                  <MenuItem onClick={() => {this.handleLogOut()}}>Logout</MenuItem>
+                </Menu>
+              </React.Fragment>
+            );
+          }}
+        </WithState>
+      </div>
+
     );
 
   }
@@ -65,7 +72,7 @@ class AccountPop extends React.Component {
 }
 
 function injectStore (Component) {
-  return (() => <Component authStore={authStore} />)
+  return ((props) => <Component authStore={authStore} {...props} />)
 }
 
 export default injectStore(AccountPop);
