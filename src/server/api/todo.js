@@ -2,47 +2,141 @@ const mongoose = require('mongoose');
 const todoModel = require('../db/todo');
 const bcrypt = require('bcrypt');
 const express = require('express');
+const jwt = require('jsonwebtoken');
+const config = require('./config');
 const router = express.Router();
 
 // create a todo
 function create(req, res, next) {
-  // TODO: add complete todo functionality by todoId
   // response = { created: bool, todoId: str }
-  todoModel.create({
-    email: req.body.email,
-    name: req.body.name,
-    completed: false
-  },
-  function(err, todo) {
-    if (err) return res.status(500).send("There was an error when creating the list.");
-    res.status(200).send({ created: true })
-  });
 
+  console.log('TODO - CREATE');
+
+  jwt.verify(req.body.token, config.secret, (err, decoded) => {
+
+    // if err, send 403
+    if (err) return res.status(403).send({created: false, todoId: null});
+
+    // create the tood item
+    todoModel.create({
+        email: decoded.id,
+        name: req.body.name,
+        completed: false
+      },
+
+      // add callback
+      function(err, todo) {
+        // if there is an error, throw the error
+        if (err) {
+          console.error(err);
+          return res.status(500).send({created: false, todoId: null});
+        }
+
+        // otherwise send the todoId
+        res.status(200).send({ created: true, id: todo._id })
+      });
+  });
 }
 
 // fetch a users todos
 function fetch(req, res, next) {
-  // TODO: add fetch todo for a particular user by email
   // response = { todos: [{ todoId: str, email: str, name: str, completed: bool }, ... ] }
-  todoModel.findOne({ email: req.body.email }, function(err, todo) {
-    if (err) return res.status(500).send('Server Error.');
-    if (!todo) return res.status(404).send('No item found.');
-    res.status(200).send(todo.name)
+
+  console.log('TODO - FETCH');
+
+  jwt.verify(req.body.token, config.secret, (err, decoded) => {
+
+    // if err, send 403
+    if (err) {
+      console.error(err);
+      return res.status(403).send({created: false, todoId: null});
+    }
+
+    // find the documents in the todo model
+    todoModel.find({
+        email: decoded.id
+      },
+
+      // add callback
+      function(err, todos) {
+
+        // if there is an error, throw the error
+        if (err) return res.status(500).send({auth: false});
+
+        let finalTodos = {};
+
+        for (let todo of todos) {
+          finalTodos[todo._id] = todo;
+        }
+
+        // otherwise send the todoId
+        res.status(200).send({ todos: finalTodos, auth: true })
+      });
   });
 }
 
 
 // create a user
 function update(req, res, next) {
-  // TODO: add functionality to update a todo by todoId
   // response = { updated: bool, todoId: str }
-  todoModel.findOne({ _id: req.body.id }, function(err, todo) {
-    if (err) return res.status(500).send('Server Error.');
-    if (!todo) return res.status(404).send('No item found.');
-    todo.completed = req.body.completed;
-    res.status(200).send({ updated: true });
-  });
 
+  console.log('TODO - UPDATE');
+
+  jwt.verify(req.body.token, config.secret, (err, decoded) => {
+
+    // if err, send 403
+    if (err) return res.status(403).send({created: false, todoId: null});
+
+    // find the documents in the todo model
+    todoModel.updateOne({
+        email: decoded.id,
+      },
+      { $set: { name: req.body.name, completed: req.body.completed } }
+      ,
+      // add callback
+      function(err, todos) {
+
+        // if there is an error, throw the error
+        if (err) return res.status(500).send({auth: false});
+
+        // otherwise send the todoId
+        res.status(200).send({ auth: true })
+      });
+  });
 }
+
+function remove(req, res, next) {
+  // response = { updated: bool, todoId: str }
+
+  console.log('TODO - DELETE');
+
+  jwt.verify(req.body.token, config.secret, (err, decoded) => {
+
+    // if err, send 403
+    if (err) return res.status(403).send({created: false, todoId: null});
+
+    // find the documents in the todo model
+    todoModel.deleteOne({
+        email: decoded.id,
+        _id: req.body.id
+      },
+      // add callback
+      function(err, todos) {
+
+        // if there is an error, throw the error
+        if (err) {
+          console.error(err);
+          return res.status(500).send({auth: false}); }
+
+        // otherwise send the todoId
+        res.status(200).send({ auth: true })
+      });
+  });
+}
+
+router.post('/create', create);
+router.post('/fetch', fetch);
+router.patch('/update', update);
+router.delete('/remove', remove);
 
 module.exports = router;

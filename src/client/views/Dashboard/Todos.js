@@ -7,9 +7,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 import FormDialog from '../../components/FormDialog';
+import axios from 'axios';
+import authStore from '../../store/auth';
 
 
 const styles = theme => ({
@@ -23,49 +26,84 @@ class Todos extends React.Component {
 
     state = {
         dialogOpen: false,
-        todos: [
-            {name: 'Buy flowers', completed: false},
-            {name: 'Call bakery about wedding cake', completed: false},
-            {name: 'Schedule catering service', completed: false},
-            {name: 'Book honeymoon', completed: false},
-            {name: 'Buy candles', completed: false},
-            {name: 'Buy ice cream', completed: false},
-            {name: 'Buy cup cakes', completed: true},
-            {name: 'Read pamphlet for essence events', completed: true},
-            {name: 'Run errand', completed: true},
-        ]
+        todos: {},
+        dialogValue: '',
+        currId: ''
     };
 
-    constructor(props) {
+    componentDidMount() {
+      const token = this.props.authStore.token;
+      axios.post('/api/todo/fetch', { token })
+        .then((res) => {
+          this.setState({ ...this.state, todos: res.data.todos });
+        }).catch((err) => {
+          console.log(err, err.response);
+      });
+    }
+
+  constructor(props) {
         super(props);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleToggle = this.handleToggle.bind(this);
     }
 
+    handleToggle(id) {
+      this.setState({...this.state,
+        todos: Object.keys(this.state.todos)
+          .map((k) => k === id ?
+            {...this.state.todos[k], completed: !this.state.todos[k].completed}  : this.state.todos[k])});
 
-    handleToggle(idx) {
-        this.setState({ ...this.state, todos: this.state.todos.map((e, i) => i === idx ? {...e, completed: !e.completed }: e) });
-        // TODO: make API call
+        axios.patch('/api/todo/update',
+    {
+            token: this.props.authStore.token,
+            id: id, name: this.state.todos[id].name,
+            completed: this.state.todos[id].completed
+          });
     }
 
-    handleDelete(idx) {
-        this.setState({ ...this.state, todos: this.state.todos.filter((e, i) => i !== idx) });
-        // TODO: make API call
+    handleDelete(id) {
+
+      axios.delete('/api/todo/remove', { data: {token: this.props.authStore.token, id: id}} )
+        .then(() => {
+          let newState = Object.assign({}, this.state);
+          delete newState.todos[id];
+          this.setState(newState);
+        });
     }
 
     handleAdd() {
-        this.setState({ ...this.state, dialogOpen: true  })
-        // TODO: make API call
+        this.setState({ ...this.state, dialogOpen: true, dialogValue: '' });
     }
 
     handleCancel() {
-        this.setState({  ...this.state, dialogOpen: false });
-        // TODO: make API call
+        this.setState({  ...this.state, dialogOpen: false, editDialog: false, dialogValue: '' });
     }
 
-    handleSave(name) {
-        this.setState({  todos: [...this.state.todos, {name, completed: false} ], dialogOpen: false});
-        // TODO: make API call
+  handleEdit(id) {
+    this.setState({ ...this.state, dialogOpen: true, dialogValue: this.state.todos[id].name, currId: id });
+  }
+
+  handleSave(name) {
+    let newState = Object.assign({}, this.state);
+      // if adding a new item
+    if (newState.dialogValue === '') {
+      axios.post('/api/todo/create', {token: this.props.authStore.token, name: name})
+        .then((res) => {
+          newState.todos[res.data.id] = { name, completed: false };
+          newState.dialogOpen = false;
+          newState.dialogValue = '';
+          this.setState(newState);
+        });
+    } else {
+      axios.patch('/api/todo/update', {token: this.props.authStore.token, name: name})
+        .then((res) => {
+          newState.todos[this.state.currId].name = name;
+          newState.dialogOpen = false;
+          newState.dialogValue = '';
+          this.setState(newState);
+        });
+    }
+
     }
 
     render() {
@@ -74,16 +112,19 @@ class Todos extends React.Component {
         return (
           <div>
               <List className={classes.root}>
-                  {this.state.todos.map((value, i) => (
-                    <ListItem key={i} dense button onClick={() => {this.handleToggle(i)}}>
+                  {Object.keys(this.state.todos).map((key) => (
+                    <ListItem key={key} dense button onClick={() => {this.handleToggle(key)}}>
                         <Checkbox
-                          checked={value.completed}
+                          checked={this.state.todos[key].completed}
                           tabIndex={-1}
                           disableRipple
                         />
-                        <ListItemText primary={`${value.name}`} />
+                        <ListItemText primary={`${this.state.todos[key].name}`}/>
                         <ListItemSecondaryAction>
-                            <IconButton aria-label="Comments" onClick={() => {this.handleDelete(i)}}>
+                          <IconButton aria-label="Comments" onClick={() => {this.handleEdit(key)}}>
+                            <EditIcon />
+                          </IconButton>
+                            <IconButton aria-label="Comments" onClick={() => {this.handleDelete(key)}}>
                                 <DeleteIcon />
                             </IconButton>
                         </ListItemSecondaryAction>
@@ -93,12 +134,15 @@ class Todos extends React.Component {
               <Fab style={{position: 'relative', bottom: 3, right: 3}} color="primary" aria-label="Add" className={classes.fab} onClick={() => {this.handleAdd()}}>
                   <AddIcon />
               </Fab>
-              <FormDialog open={this.state.dialogOpen} handleSave={this.handleSave.bind(this)} handleCancel={this.handleCancel.bind(this)}/>
-
+            {this.state.dialogOpen ? <FormDialog initialValue={this.state.dialogValue} handleSave={this.handleSave.bind(this)} handleCancel={this.handleCancel.bind(this)}/> : null}
           </div>
 
         );
     }
 }
 
-export default withStyles(styles)(Todos);
+function injectStore (Component) {
+  return (() => <Component authStore={authStore} />)
+}
+
+export default injectStore(withStyles(styles)(Todos));

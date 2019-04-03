@@ -5,7 +5,6 @@ const todoSchema = new Schema({
 
 	email: {
 		type: String,
-		unique: true,
 		required: true
 	},
 	name: {
@@ -13,8 +12,9 @@ const todoSchema = new Schema({
 		required: true
 	},
 	completed: {
-		type: Boolean
+		type: Boolean,
+		required: true
 	}
 });
 
-module.exports = mongoose.model('Todos', todoSchema);
+module.exports = mongoose.model('Todo', todoSchema);

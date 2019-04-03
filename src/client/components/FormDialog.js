@@ -9,28 +9,30 @@ import DialogTitle from '@material-ui/core/DialogTitle/index';
 
 export default class FormDialog extends React.Component {
   state = {
-    open: false,
     name: ''
   };
+
+  componentDidMount() {
+    this.setState({...this.state, name: this.props.initialValue});
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
   };
 
   handleClose = () => {
-    this.props.addMethod();
     this.setState({ open: false });
   };
 
   handleChange(name) {
-    this.setState({ ...this.state, name})
+    this.setState({ ...this.state, name: name})
   }
 
   render() {
     return (
       <div>
         <Dialog
-          open={this.props.open}
+          open={true}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
@@ -46,6 +48,7 @@ export default class FormDialog extends React.Component {
               type="email"
               fullWidth
               onChange={(e) => this.handleChange(e.target.value)}
+              defaultValue={this.props.initialValue}
             />
           </DialogContent>
           <DialogActions>
@@ -53,7 +56,7 @@ export default class FormDialog extends React.Component {
               Cancel
             </Button>
             <Button onClick={() => this.props.handleSave(this.state.name)} color="primary">
-              Add
+              Save
             </Button>
           </DialogActions>
         </Dialog>
