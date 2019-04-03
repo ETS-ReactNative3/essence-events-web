@@ -5,7 +5,6 @@ import Dialog from '@material-ui/core/Dialog/index';
 import DialogActions from '@material-ui/core/DialogActions/index';
 import DialogContent from '@material-ui/core/DialogContent/index';
 import DialogContentText from '@material-ui/core/DialogContentText/index';
-import DialogTitle from '@material-ui/core/DialogTitle/index';
 
 export default class FormDialog extends React.Component {
   state = {
@@ -38,13 +37,13 @@ export default class FormDialog extends React.Component {
         >
           <DialogContent>
             <DialogContentText>
-              Type the todo name here.
+              {this.props.message}
             </DialogContentText>
             <TextField
               autoFocus
               margin="dense"
               id="name"
-              label="Todo Name"
+              label={this.props.name}
               type="email"
               fullWidth
               onChange={(e) => this.handleChange(e.target.value)}

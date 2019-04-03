@@ -21,6 +21,7 @@ app.use(express.static('dist'));
 
 app.use('/api/user', userRouter);
 app.use('/api/todo', todoRouter);
+app.use('/api/calendar', calendarRouter);
 
 app.use('/*', (req, res) => { res.sendFile(path.join(__dirname, '../../dist/index.html'))});
 
