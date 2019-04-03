@@ -10,8 +10,7 @@ const app = express();
 app.use(bodyParser.json());
 
 const calendarRouter = require('./api/calendar');
-const cartRouter = require('./api/cart');
-const marketplaceRouter = require('./api/marketplace');
+const orderRouter = require('./api/orders');
 const todoRouter = require('./api/todo');
 const userRouter = require('./api/user');
 
