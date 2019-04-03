@@ -30,7 +30,7 @@ export default class CartDialog extends React.Component {
 
             {this.props.cart ? this.props.cart.map((e, i) =>
               <Typography key={i}>
-                {e.title} - ${e.price}
+                {e.title} - ${Math.round(e.price * 100) / 100}
               </Typography>) : null}
 
             <Typography><b>Total: ${this.props.price}</b></Typography>

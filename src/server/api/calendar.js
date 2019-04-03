@@ -64,14 +64,14 @@ function fetch(req, res, next) {
 
 function remove(req, res, next) {
 
-  console.log('TODO - DELETE');
+  console.log('CALENDAR - DELETE');
 
   jwt.verify(req.body.token, config.secret, (err, decoded) => {
 
     if (err) return res.status(403).send({ auth: false });
 
     calendarModel.deleteOne({
-
+      _id: req.body.id
     },
       function (err, event) {
 

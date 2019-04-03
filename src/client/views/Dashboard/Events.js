@@ -109,7 +109,7 @@ class Events extends React.Component {
             </TableBody>
           </Table>
         </Paper>
-        <Fab style={{position: 'relative', bottom: 3, right: 3}} color="primary" aria-label="Add" className={classes.fab} onClick={() => {this.handleAddClick()}}>
+        <Fab style={{position: 'absolute', bottom: 15, right: 15}} color="primary" aria-label="Add" className={classes.fab} onClick={() => {this.handleAddClick()}}>
           <AddIcon />
         </Fab>
         {this.state.openDialog ? <CalendarDialog error={this.state.addError} handleSave={(e) => { this.handleSaveClick(e) }} handleCancel={() => { this.setState({ ...this.state, openDialog: false }) }} /> : null }

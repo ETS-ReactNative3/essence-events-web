@@ -131,7 +131,7 @@ class Todos extends React.Component {
                     </ListItem>
                   ))}
               </List>
-              <Fab style={{position: 'relative', bottom: 3, right: 3}} color="primary" aria-label="Add" className={classes.fab} onClick={() => {this.handleAdd()}}>
+              <Fab style={{position: 'absolute', bottom: 15, right: 15}} color="primary" aria-label="Add" className={classes.fab} onClick={() => {this.handleAdd()}}>
                   <AddIcon />
               </Fab>
             {this.state.dialogOpen ? <FormDialog initialValue={this.state.dialogValue} message="Enter name of to-do!" name="to-do name" handleSave={this.handleSave.bind(this)} handleCancel={this.handleCancel.bind(this)}/> : null}
