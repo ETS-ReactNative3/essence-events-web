@@ -17,9 +17,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import CartIcon from '@material-ui/icons/ShoppingBasket';
 import { withStyles } from '@material-ui/core/styles';
 import CartStore from '../../store/cart';
+import authStore from '../../store/auth';
 import { observer } from 'mobx-react';
 import Badge from '@material-ui/core/Badge';
 import CartDialog from '../../components/CartDialog';
+import axios from 'axios';
 
 const services = [
   { img: services0, title: "Assorted Multi-color Napkins", price: 10.99 },
@@ -75,30 +77,39 @@ class Marketplace extends React.Component {
   };
 
   onAddClick(item) {
+
+    let newItem = {...item};
+    delete newItem.img;
+
     // add item to store
     // this.props.CartStore.cart.push({ ...item, img: null });
     if (this.props.CartStore.cart === undefined) {
-      this.props.CartStore.cart = [{ ...item, img: null }];
+      this.props.CartStore.cart = [newItem];
     }
     else {
-      this.props.CartStore.cart.push({ ...item, img: null });
+
+      this.props.CartStore.cart.push(newItem);
     }
     this.forceUpdate();
   }
 
   onCheckOutClick() {
     if (this.props.CartStore.cart !== undefined && this.props.CartStore.cart.length !== 0) {
-      // TODO: make post request
 
-      // remove items from cart
-      this.props.CartStore.cart = [];
-      this.setState({ ...this.state, openCart: false })
+      axios.post('/api/order/create', { items: this.props.CartStore.cart, token: this.props.authStore.token })
 
+        .then((res) => {
+
+          // remove items from cart
+          this.props.CartStore.cart = [];
+          this.setState({ ...this.state, openCart: false })
+        });
     }
   }
 
   onCancelClick() {
-    this.setState({ ...this.state, openCart: false })
+    this.setState({ ...this.state, openCart: false });
+    this.props.CartStore.cart = [];
   }
 
   onCartClick() {
@@ -133,7 +144,13 @@ class Marketplace extends React.Component {
           </Toolbar>
         </AppBar>
 
-        {this.state.openCart ? <CartDialog message='Cart' cart={this.props.CartStore.cart} handleCancel={this.onCancelClick.bind(this)} handleSave={this.onCheckOutClick.bind(this)}/> : null}
+        {this.state.openCart && this.props.CartStore.cart && this.props.CartStore.cart.length !== 0 ?
+          <CartDialog
+            message='Cart'
+            cart={this.props.CartStore.cart}
+            price={this.props.CartStore.cart.reduce((a, b) => ({price: a.price + b.price})).price}
+            handleCancel={this.onCancelClick.bind(this)}
+            handleSave={this.onCheckOutClick.bind(this)}/> : null}
 
       </div>
     );
@@ -142,7 +159,7 @@ class Marketplace extends React.Component {
 }
 
 function injectStore (Component) {
-  return (() => <Component CartStore={CartStore} />)
+  return (() => <Component CartStore={CartStore} authStore={authStore} />)
 }
 
 export default injectStore(observer(withStyles(styles)(Marketplace)));

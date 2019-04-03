@@ -10,7 +10,7 @@ const app = express();
 app.use(bodyParser.json());
 
 const calendarRouter = require('./api/calendar');
-const orderRouter = require('./api/orders');
+const orderRouter = require('./api/order');
 const todoRouter = require('./api/todo');
 const userRouter = require('./api/user');
 
@@ -21,6 +21,7 @@ app.use(express.static('dist'));
 app.use('/api/user', userRouter);
 app.use('/api/todo', todoRouter);
 app.use('/api/calendar', calendarRouter);
+app.use('/api/order', orderRouter);
 
 app.use('/*', (req, res) => { res.sendFile(path.join(__dirname, '../../dist/index.html'))});
 

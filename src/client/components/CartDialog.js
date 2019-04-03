@@ -9,15 +9,10 @@ import DialogContentText from '@material-ui/core/DialogContentText/index';
 import { Typography } from '@material-ui/core';
 
 export default class CartDialog extends React.Component {
-  state = {
-    name: '',
-    startDate: '',
-    endDate: '',
-    description: ''
-  };
 
-  componentDidMount() {
-    this.setState({...this.state, name: this.props.initialValue});
+
+  componentDidUpdate() {
+    console.log(this.props.price);
   }
 
   render() {
@@ -38,6 +33,8 @@ export default class CartDialog extends React.Component {
               <Typography key={i}>
                 {e.title} - ${e.price}
               </Typography>) : null}
+
+            <Typography><b>Total: ${this.props.price}</b></Typography>
 
           </DialogContent>
           <DialogActions>
