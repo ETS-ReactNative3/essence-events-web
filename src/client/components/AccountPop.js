@@ -51,7 +51,6 @@ class AccountPop extends React.Component {
 
               <Menu id="render-props-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
                 <MenuItem onClick={() => {console.log('test')}}>Settings</MenuItem>
-                <MenuItem onClick={() => {console.log('test')}}>Purchase History</MenuItem>
                 <MenuItem onClick={() => {this.handleLogOut()}}>Logout</MenuItem>
               </Menu>
             </React.Fragment>

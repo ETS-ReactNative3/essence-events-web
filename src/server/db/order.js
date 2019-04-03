@@ -6,7 +6,8 @@ delete mongoose.modelSchemas.user;
 
 const orderSchema = new Schema({
   items: { type: [Schema.Types.Mixed], required: true },
-  email: { required: true, type: String }
+  email: { required: true, type: String },
+  date: Date
 });
 
 const order = mongoose.model('Order', orderSchema);
